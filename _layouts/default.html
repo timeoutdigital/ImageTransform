@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<head profile="http://gmpg.org/xfn/11">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <base href="https://imagetransform.github.com/ImageTransform/">
+  <title>{{ page.title }} | ImageTransform - easy PHP image manipulation</title>
+  <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
+  <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print">
+  <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection">
+  <![endif]-->
+  <link type="text/css" rel="stylesheet" href="/css/main.css"></link> 
+  <link type="text/css" rel="stylesheet" href="/css/style.css"></link> 
+  <script type="text/javascript" src="/js/jquery-1.4.4.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Lobster:regular' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Just+Another+Hand:regular' rel='stylesheet' type='text/css'>
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-383300-15']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+  </script>
+</head>
+
+<body>
+
+  <div class="container content">
+    {% include header.html %}
+    <div class="span-24 last">
+      <h4>{{ page.kicker }}&nbsp;<h4>
+      <h1>{{ page.title }}</h1>
+      {% include navigation.html %}
+      <p>{{ content }}</p>
+    </div>
+    {% include footer.html %}
+  </div>
+
+</body>
+</html>

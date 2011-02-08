@@ -1,0 +1,10 @@
+.title { margin-bottom: 20px; height: 160px; font-family: 'Lobster', arial, serif; font-size: 2em; border-bottom: 1px dotted #ddd; }
+.title img { margin-top: 10px; }
+.title h1 {  margin: 10px 0; }
+.title h4 {  }
+
+.footer { margin-top: 20px; font-family: 'Just Another Hand', arial, serif; font-size: 2em; border-top: 1px dotted #ddd; }
+
+a[title^=Download] { border: 2px solid #000; background: #0f0; color: #fff; font-size: 2em; font-weight: bold; text-decoration: none; padding: 10px; -moz-border-radius: 10px; border-radius: 10px; }
+a[title^=Download]:hover { background: #6f6; }
+a[title^=Download]:active { background: #0a0; }
