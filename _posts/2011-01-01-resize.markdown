@@ -1,0 +1,60 @@
+---
+layout: default
+kicker: TRANSFORMATION
+title: resize()
+category: transformations
+---
+
+## Description
+
+    Transformation Transformation::resize( int $width, int $height [, int $flags = 0 ] )
+
+Resizes an image to a specified size.
+
+## Parameters
+
+* `$targetWidth`<br/>
+  Specifies the target width of the image resource to be processed.<br/><br/>
+* `$targetHeight`<br/>
+  Specifies the target height of the image resource to be processed.<br/><br/>
+* `$flags`<br/>
+  Can be any of the following options OR'ed together:<br/>
+  * `Resizer::PROPORTIONAL`<br/>If set the relation of width and height of the original image will not be altered. If not set the image might be stretched.
+  * `Resizer::NO_INFLATE`<br/>If set the resulting dimensions will not exceed those of the original image.
+  * `Resizer::NO_DEFLATE`<br/>If set the resulting dimensions will not deceed those of the original image.
+  * `Resizer::MINIMUM`<br/>If set the target dimensions will set the inside boundary of the resulting image. If not set it will set the outside boundary.
+    
+
+## Registering the Resize transformation
+
+    {% highlight php %}
+    <?php
+    
+    // You can use the GD version
+    use \ImageTransform\Transformation\Resizer\GD as Resizer;
+    // or use the ImageMagick version
+    use \ImageTransform\Transformation\Resizer\ImageMagick as Resizer;
+
+    // Registering Resizer
+    Transformation::addTransformation(new Resizer());
+    {% endhighlight %}
+
+<br/><br/>
+
+## Example
+
+    {% highlight php %}
+    <?php
+
+    $image = new Image('/path/to/image.jpg');
+    $transformation = new Transformation();
+
+    $transformation->resize(100, 200, Resizer::PROPORTIONAL | Resizer::NO_INFLATE)
+                   ->process($image);
+
+    $image->flush();
+    {% endhighlight %}
+
+<br/><br/>
+
+The above example resizes the given image to 100 by 200 pixels keeping the original proportions while not inflating.
