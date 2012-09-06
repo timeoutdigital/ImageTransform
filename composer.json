@@ -1,0 +1,27 @@
+{
+    "name": "timeoutdigital/image-transform",
+    "type": "library",
+    "version": "master",
+    "description": "Image Transform",
+    "keywords": ["image"],
+    "homepage": "http://timeout.com",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Time Out Digital",
+            "homepage": "http://timeout.com",
+            "email": "contact@timeout.com"
+        }
+    ],
+
+    "require": {
+        "php": ">=5.3.2"
+    },
+
+    "autoload": {
+        "psr-0": {
+             "ImageTransform": "src/"
+        }
+    }    
+}
+
