@@ -20,7 +20,7 @@ class ImageMagick extends Resizer
 {
   protected function doResize($originalImage, $originalWidth, $originalHeight, $targetWidth, $targetHeight)
   {
-    $originalImage->resizeImage($targetWidth, $targetHeight, \Imagick::FILTER_LANCZOS, false);
+    $originalImage->resizeImage($targetWidth, $targetHeight, \Imagick::FILTER_LANCZOS, 1);
 
     return $originalImage;
   }
