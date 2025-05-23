@@ -10,91 +10,123 @@
 namespace ImageTransform\Tests;
 
 use ImageTransform\Transformation;
-use ImageTransform\Image;
+use PHPUnit\Framework\TestCase;
+use ImageTransform\Image\GD as Image;
 
-class TransformationTest extends \PHPUnit_Framework_TestCase
+class TransformationTest extends TestCase
 {
-  /**
-   * @expectedException \OutOfBoundsException
-   * @covers \ImageTransform\Transformation::getTransformation
-   */
-  public function testUnaddedTransformation()
-  {
-    $methodName = 'dummyCallback';
-    Transformation::getTransformation($methodName);
-  }
+    /**
+     *
+     * @covers \ImageTransform\Transformation::getTransformation
+     */
+    public function testUnaddedTransformation()
+    {
+        $this->expectException(\OutOfBoundsException::class);
+        $methodName = 'dummyCallback';
+        Transformation::getTransformation($methodName);
+    }
 
-  /**
-   * @depends testUnaddedTransformation
-   * @covers \ImageTransform\Transformation::addTransformation
-   * @covers \ImageTransform\Transformation::getTransformation
-   */
-  public function testAddingTransformation()
-  {
-    $methodName = 'dummyCallback';
-    $stubTransformation = $this->getMock('\Object', array($methodName));
+    /**
+     * @depends testUnaddedTransformation
+     * @covers  \ImageTransform\Transformation::addTransformation
+     * @covers  \ImageTransform\Transformation::getTransformation
+     */
+    public function testAddingTransformation()
+    {
+        $methodName = 'dummyCallback';
 
-    Transformation::addTransformation($stubTransformation);
+        $stubTransformation = $this->getMockBuilder(DummyClass::class)
+            ->onlyMethods([$methodName])
+            ->getMock();
 
-    $callback = Transformation::getTransformation($methodName);
-    $this->assertInternalType('array', $callback);
-    $this->assertEquals($stubTransformation, $callback[0]);
-    $this->assertEquals($methodName, $callback[1]);
-  }
+        Transformation::addTransformation($stubTransformation);
 
-  /**
-   * @covers \ImageTransform\Transformation::__call
-   * @covers \ImageTransform\Transformation::getStack
-   */
-  public function testSuccessfulDelegation()
-  {
-    $methodName = 'dummyCallback';
-    $stubTransformation = $this->getMock('\Object', array($methodName));
+        $callback = Transformation::getTransformation($methodName);
+        $this->assertIsArray($callback);
+        $this->assertEquals($stubTransformation, $callback[0]);
+        $this->assertEquals($methodName, $callback[1]);
+    }
 
-    Transformation::addTransformation($stubTransformation);
+    /**
+     * @covers \ImageTransform\Transformation::__call
+     * @covers \ImageTransform\Transformation::getStack
+     */
+    public function testSuccessfulDelegation()
+    {
+        $methodName = 'dummyCallback';
 
-    $transformation = new Transformation();
+        $stubTransformation = $this->getMockBuilder(DummyClass::class)
+            ->onlyMethods([$methodName])
+            ->getMock();
 
-    $this->assertEquals(0, count($transformation->getStack()));
-    $transformation->dummyCallback();
-    $this->assertEquals(1, count($transformation->getStack()));
-    $transformation->dummyCallback();
-    $this->assertEquals(2, count($transformation->getStack()));
+        Transformation::addTransformation($stubTransformation);
 
-    return $transformation;
-  }
+        $transformation = new Transformation();
 
-  /**
-   * @depends testUnaddedTransformation
-   * @expectedException \BadMethodCallException
-   * @covers \ImageTransform\Transformation::__call
-   */
-  public function testFailedDelegation($transformation)
-  {
-    $methodName = 'dummyCallback';
-    $transformation = new Transformation();
-    $transformation->$methodName();
-  }
+        $this->assertCount(0, $transformation->getStack());
+        $transformation->dummyCallback();
+        $this->assertCount(1, $transformation->getStack());
+        $transformation->dummyCallback();
+        $this->assertCount(2, $transformation->getStack());
 
-  /**
-   * @depends testSuccessfulDelegation
-   * @covers \ImageTransform\Transformation::process
-   */
-  public function testSuccessfulProcessing($transformation)
-  {
-    $image = $this->getMock('\ImageTransform\Image', array('create', 'open', 'flush', 'save', 'saveAs', 'initialize'));
-    $transformation->process($image);
-  }
+        return $transformation;
+    }
 
-  /**
-   * @covers \ImageTransform\Transformation::__invoke
-   */
-  public function testSuccessfulProcessingByDirectInvokation()
-  {
-    $image = $this->getMock('\ImageTransform\Image', array('create', 'open', 'flush', 'save', 'saveAs', 'initialize'));
-    $transformation = $this->getMock('\ImageTransform\Transformation', array('process'));
-    $transformation->expects($this->once())->method('process')->with($this->equalTo($image));
+    /**
+     * @depends testUnaddedTransformation
+     *
+     * @covers  \ImageTransform\Transformation::__call
+     */
+    public function testFailedDelegation()
+    {
+        $this->expectException(\BadMethodCallException::class);
+        $methodName = 'dummyCallback';
+        $transformation = new Transformation();
+        $transformation->$methodName();
+    }
 
-    $transformation($image);
-  }
+    /**
+     * @depends testSuccessfulDelegation
+     * @covers  \ImageTransform\Transformation::process
+     */
+    public function testSuccessfulProcessing($transformation)
+    {
+        $image = $this->getMockBuilder(Image::class)
+            ->onlyMethods(['create', 'open', 'flush', 'save', 'saveAs', 'initialize'])
+            ->getMock();
+        $transformation->process($image);
+    }
+
+    /**
+     * @covers \ImageTransform\Transformation::__invoke
+     */
+    public function testSuccessfulProcessingByDirectInvocation()
+    {
+        $image = $this->getMockBuilder(Image::class)
+            ->onlyMethods(['create', 'open', 'flush', 'save', 'saveAs', 'initialize'])
+            ->getMock();
+
+        $transformation = $this->getMockBuilder(Transformation::class)
+            ->onlyMethods(['process'])
+            ->getMock();
+
+        $transformation->expects($this->once())->method('process')->with($this->equalTo($image));
+
+        $transformation($image);
+    }
+
+    protected function tearDown(): void
+    {
+        $reflection = new \ReflectionClass(Transformation::class);
+        $property = $reflection->getProperty('transformations');
+        $property->setAccessible(true);
+        $property->setValue([]);
+    }
+}
+
+class DummyClass
+{
+    public function dummyCallback()
+    {
+    }
 }

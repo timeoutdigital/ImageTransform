@@ -16,38 +16,38 @@ namespace ImageTransform;
  */
 interface FileAccessAdapter
 {
-  /**
-   * Create an image resource
-   *
-   * @param integer              $width  Width of the image to be created
-   * @param integer              $height Height of the image to be created
-   */
-  public function create($width, $height);
+    /**
+     * Create an image resource
+     *
+     * @param integer $width Width of the image to be created
+     * @param integer $height Height of the image to be created
+     */
+    public function create($width, $height);
 
-  /**
-   * Open a resource for an Image
-   *
-   * @param string               $filepath Location of the file to open
-   */
-  public function open($filepath);
+    /**
+     * Open a resource for an Image
+     *
+     * @param string $filepath Location of the file to open
+     */
+    public function open($filepath);
 
-  /**
-   * Flush an Image resource to stdout
-   *
-   * @param string               $mimeType Mime type of the target file
-   */
-  public function flush($mimeType = false);
+    /**
+     * Flush an Image resource to stdout
+     *
+     * @param string $mimeType Mime type of the target file
+     */
+    public function flush($mimeType = false);
 
-  /**
-   * Save an Image resource under its current location
-   */
-  public function save();
+    /**
+     * Save an Image resource under its current location
+     */
+    public function save();
 
-  /**
-   * Save an Image resource under a given filepath
-   *
-   * @param string               $filepath Locastion where to save the resource
-   * @param string               $mimeType Mime type of the target file
-   */
-  public function saveAs($filepath, $mimeType = false);
+    /**
+     * Save an Image resource under a given filepath
+     *
+     * @param string $filepath Locastion where to save the resource
+     * @param string $mimeType Mime type of the target file
+     */
+    public function saveAs($filepath, $mimeType = false);
 }
