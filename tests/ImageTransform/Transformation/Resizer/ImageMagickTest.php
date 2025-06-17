@@ -9,36 +9,42 @@
 
 namespace ImageTransform\Tests\Transformation\Resizer;
 
-use ImageTransform\Image;
+use ImageTransform\Image\GD as Image;
 use ImageTransform\Transformation\Resizer\ImageMagick as Resizer;
+use PHPUnit\Framework\TestCase;
 
-class ImageMagickTest extends \PHPUnit_Framework_TestCase
+class ImageMagickTest extends TestCase
 {
-  protected function setUp()
-  {
-    $width = 10;
-    $height = 10;
-    $this->resource = new \Imagick(__DIR__.'/../../../fixtures/20x20-pattern.jpg');
+    private Image $image;
+    private Resizer $resize;
 
-    $this->image = $this->getMock('\ImageTransform\Image', array('create', 'open', 'flush', 'save', 'saveAs', 'initialize'));
-    $this->image->set('image.resource', $this->resource);
-    $this->image->set('image.width', $width);
-    $this->image->set('image.height', $height);
+    protected function setUp(): void
+    {
+        $width = 10;
+        $height = 10;
+        $resource = new \Imagick(__DIR__ . '/../../../fixtures/20x20-pattern.jpg');
 
-    $this->resize = new Resizer();
-  }
+        $this->image = $this->getMockBuilder(Image::class)
+            ->onlyMethods(['create', 'open', 'flush', 'save', 'saveAs', 'initialize'])
+            ->getMock();
+        $this->image->set('image.resource', $resource);
+        $this->image->set('image.width', $width);
+        $this->image->set('image.height', $height);
 
-  /**
-   * @covers \ImageTransform\Transformation\Resizer\ImageMagick::doResize
-   */
-  public function testResizing()
-  {
-    $width = 20;
-    $height = 20;
+        $this->resize = new Resizer();
+    }
 
-    $this->image = $this->resize->resize($this->image, $width, $height);
-    $this->assertEquals($width, $this->image->get('image.width'));
-    $this->assertEquals($height, $this->image->get('image.height'));
-    $this->assertInstanceOf('\Imagick', $this->image->get('image.resource'));
-  }
+    /**
+     * @covers \ImageTransform\Transformation\Resizer\ImageMagick::doResize
+     */
+    public function testResizing()
+    {
+        $width = 20;
+        $height = 20;
+
+        $this->image = $this->resize->resize($this->image, $width, $height);
+        $this->assertEquals($width, $this->image->get('image.width'));
+        $this->assertEquals($height, $this->image->get('image.height'));
+        $this->assertInstanceOf('\Imagick', $this->image->get('image.resource'));
+    }
 }

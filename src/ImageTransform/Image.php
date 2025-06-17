@@ -18,52 +18,49 @@ namespace ImageTransform;
  */
 abstract class Image
 {
-  /**
-   * @var array $attributes Key / value store to be used for meta information by delegates.
-   */
-  protected $attributes = array();
+    /**
+     * @var array $attributes Key / value store to be used for meta information by delegates.
+     */
+    protected array $attributes = [];
 
-  /**
-   * C'tor
-   *
-   * @param array $classNames List of Delegate inheriting classes providing transformations.
-   */
-  public function __construct($filepath = false)
-  {
-    $this->initialize();
-
-    if(false !== $filepath)
+    /**
+     * @param bool $filepath
+     */
+    public function __construct($filepath = false)
     {
-      $this->open($filepath);
+        $this->initialize();
+
+        if (false !== $filepath) {
+            $this->open($filepath);
+        }
     }
-  }
 
-  /**
-   * Initializes image-api specific code
-   */
-  abstract protected function initialize();
+    /**
+     * Initializes image-api specific code
+     */
+    abstract protected function initialize();
 
-  /**
-   * Attribute accessor.
-   *
-   * @param  string $key     Name of the attribute to return
-   * @param  array  $default Default value in case the key is unknown
-   * @return mixed           The value as stored in $this->attributes[$key] or the $default
-   */
-  public function get($key, $default = false)
-  {
-    return array_key_exists($key, $this->attributes) ? $this->attributes[$key] : $default;
-  }
+    /**
+     * Attribute accessor.
+     *
+     * @param string $key Name of the attribute to return
+     * @param bool|array $default Default value in case the key is unknown
+     * @return mixed           The value as stored in $this->attributes[$key] or the $default
+     */
+    public function get(string $key, bool|array $default = false): mixed
+    {
+        return array_key_exists($key, $this->attributes) ? $this->attributes[$key] : $default;
+    }
 
-  /**
-   * Attribute mutator.
-   w
-   *
-   * @param string $key   Name of the attribute to set
-   * @param array  $value Value to be set
-   */
-  public function set($key, $value)
-  {
-    $this->attributes[$key] = $value;
-  }
+    /**
+     * Attribute mutator.
+     * w
+     *
+     * @param string $key Name of the attribute to set
+     * @param array $value Value to be set
+     */
+    public function set($key, $value): void
+    {
+        $this->attributes[$key] = $value;
+    }
 }

@@ -1,36 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<phpunit backupGlobals="false"
-         backupStaticAttributes="true"
-         bootstrap="src/autoload.php"
-         colors="false"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false"
-         syntaxCheck="true"
-         verbose="true"
-         testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
-         strict="true">
-
-  <testsuites>
-    <testsuite name="ImageTransform Test Suite">
-      <directory>./tests/ImageTransform</directory>
-    </testsuite>
-  </testsuites>
-
-  <filter>
-    <whitelist addUncoveredFilesFromWhitelist="true">
-      <directory suffix=".php">./src/ImageTransform</directory>
-    </whitelist>
-  </filter>
-
-  <logging>
-    <log type="coverage-html" target="build/coverage" title="ImageTransform"
-         charset="UTF-8" yui="true" highlight="true"
-         lowUpperBound="35" highLowerBound="70"/>
-    <log type="coverage-clover" target="build/logs/clover.xml"/>
-    <log type="junit" target="build/logs/junit.xml" logIncompleteSkipped="false"/>
-  </logging>
+<phpunit
+        bootstrap="src/autoload.php"
+        colors="true"
+        stopOnFailure="false"
+        cacheResultFile=".phpunit.cache"
+        executionOrder="depends,defects"
+        failOnDeprecation="false"
+        failOnWarning="false"
+        displayDetailsOnTestsThatTriggerDeprecations="false"
+        displayDetailsOnPhpunitDeprecations="false"
+        displayDetailsOnTestsThatTriggerWarnings="false"
+        displayDetailsOnIncompleteTests="false"
+>
+    <testsuites>
+        <testsuite name="ImageTransform Test Suite">
+            <directory suffix="Test.php">./tests/ImageTransform</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>
