@@ -8,6 +8,9 @@ use PHPUnit\Framework\TestCase;
 
 class ResizerTest extends TestCase
 {
+    private Image $image;
+    private Resizer $resize;
+
     protected function setUp(): void
     {
         $this->image = $this->getMockBuilder(Image::class)

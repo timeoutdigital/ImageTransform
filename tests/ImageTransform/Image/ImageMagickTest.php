@@ -212,7 +212,7 @@ class ImageMagickTest extends TestCase
         $image->flush('mime/unsupported');
     }
 
-    public function mimeTypes(): array
+    public static function mimeTypes(): array
     {
         return [
             [false],

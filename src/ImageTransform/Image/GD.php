@@ -54,6 +54,10 @@ class GD extends Image implements FileAccessAdapter
 
         $info = getimagesize($filepath);
 
+        if ($info === false) {
+            throw new \UnexpectedValueException('File "' . $filepath . '" is not a valid image!');
+        }
+
         switch ($info['mime']) {
             case 'image/gif':
                 $resource = imagecreatefromgif($filepath);

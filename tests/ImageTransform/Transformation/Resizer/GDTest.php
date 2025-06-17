@@ -15,16 +15,19 @@ use PHPUnit\Framework\TestCase;
 
 class GDTest extends TestCase
 {
+    private Image $image;
+    private Resizer $resize;
+
     protected function setUp(): void
     {
         $width = 10;
         $height = 10;
-        $this->resource = imagecreatetruecolor($width, $height);
+        $resource = imagecreatetruecolor($width, $height);
 
         $this->image = $this->getMockBuilder(Image::class)
             ->onlyMethods(['create', 'open', 'flush', 'save', 'saveAs', 'initialize'])
             ->getMock();
-        $this->image->set('image.resource', $this->resource);
+        $this->image->set('image.resource', $resource);
         $this->image->set('image.width', $width);
         $this->image->set('image.height', $height);
 

@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-COPY . .
+COPY .. .
 
 RUN composer install
 

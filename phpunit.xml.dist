@@ -5,10 +5,16 @@
         stopOnFailure="false"
         cacheResultFile=".phpunit.cache"
         executionOrder="depends,defects"
+        failOnDeprecation="false"
+        failOnWarning="false"
+        displayDetailsOnTestsThatTriggerDeprecations="false"
+        displayDetailsOnPhpunitDeprecations="false"
+        displayDetailsOnTestsThatTriggerWarnings="false"
+        displayDetailsOnIncompleteTests="false"
 >
-  <testsuites>
-    <testsuite name="ImageTransform Test Suite">
-      <directory suffix="Test.php">./tests/ImageTransform</directory>
-    </testsuite>
-  </testsuites>
+    <testsuites>
+        <testsuite name="ImageTransform Test Suite">
+            <directory suffix="Test.php">./tests/ImageTransform</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>

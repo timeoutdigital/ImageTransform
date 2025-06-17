@@ -14,6 +14,8 @@ use PHPUnit\Framework\TestCase;
 
 class GDTest extends TestCase
 {
+    private Image $image;
+
     /**
      * @covers \ImageTransform\Image\GD::initialize
      */

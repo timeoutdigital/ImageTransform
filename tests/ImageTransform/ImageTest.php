@@ -14,6 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class ImageTest extends TestCase
 {
+    private Image $image;
     protected function setUp(): void
     {
         $this->image = $this->getMockBuilder(Image::class)

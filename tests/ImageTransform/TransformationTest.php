@@ -89,12 +89,23 @@ class TransformationTest extends TestCase
      * @depends testSuccessfulDelegation
      * @covers  \ImageTransform\Transformation::process
      */
-    public function testSuccessfulProcessing($transformation)
+    protected function testSuccessfulProcessing()
     {
         $image = $this->getMockBuilder(Image::class)
             ->onlyMethods(['create', 'open', 'flush', 'save', 'saveAs', 'initialize'])
             ->getMock();
+
+        $transformation = $this->getMockBuilder(Transformation::class)
+            ->onlyMethods(['process'])
+            ->getMock();
+
+        $transformation->expects($this->once())
+            ->method('process')
+            ->with($this->equalTo($image));
+
         $transformation->process($image);
+
+        $this->assertInstanceOf(Image::class, $image);
     }
 
     /**
@@ -120,7 +131,7 @@ class TransformationTest extends TestCase
         $reflection = new \ReflectionClass(Transformation::class);
         $property = $reflection->getProperty('transformations');
         $property->setAccessible(true);
-        $property->setValue([]);
+        $property->setValue(null, []);
     }
 }
 
