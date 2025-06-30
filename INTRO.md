@@ -1,0 +1,3 @@
+# ImageTransform
+
+ImageTransform is a PHP image manipulation library designed to simplify common image processing tasks such as creating thumbnails, adding watermarks, and applying various transformations. The library provides a fluent API that supports chaining multiple transformations and offers dual backend support through both PHP GD and ImageMagick extensions, ensuring flexibility and performance optimization based on available system resources.
